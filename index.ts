@@ -12,7 +12,7 @@ export class XLSXCell {
 	private _value: string | XSLXFormula
 
 	constructor (sheetId: SheetId, position: string, value: string | XSLXFormula){
-		this._position = /[A-Z]+?[0-9]+/.test(position)? position : 'A1'
+		this._position = /[A-Z]+?[1-9]+?[0-9]*/.test(position)? position : 'A1'
 		this._value = value
 		this._sheetId = sheetId
 	}
