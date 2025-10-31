@@ -1,6 +1,6 @@
 {
   "name": "xlsx-maker",
-  "module": "index.ts",
+  "module": "src/index.ts",
   "author": "Muhammad Sulais",
   "license": "MIT",
   "type": "module",
