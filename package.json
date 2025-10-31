@@ -1,0 +1,13 @@
+{
+  "name": "xlsx-maker",
+  "module": "index.ts",
+  "author": "Muhammad Sulais",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
