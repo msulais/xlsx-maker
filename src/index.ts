@@ -300,6 +300,14 @@ export class XLSXSheet {
 		return this.#cells.values().toArray()
 	}
 
+	addCell(cell: XLSXCell) {
+		this.#cells.set(cell.position, cell)
+	}
+
+	deleteCell(position: XLSXCell['position']) {
+		this.#cells.delete(position)
+	}
+
 	static copy(sheet: XLSXSheet) {
 		return new XLSXSheet(sheet.#name, sheet.cells.map(v => XLSXCell.copy(v)), {
 			id: sheet.#id,
