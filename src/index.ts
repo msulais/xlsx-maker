@@ -330,7 +330,6 @@ export class XLSX {
 		.values()
 		.toArray()
 		.sort((a, b) => a.order - b.order)
-		.map(v => XLSXSheet.copy(v))
 	}
 
 	get options() {
