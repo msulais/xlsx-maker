@@ -58,25 +58,25 @@ export type XLSXOptions = {
 
 export type XLSXCellAttributes = {
 	borderBottomColor?: AARRGGBB
-	borderBottomStyle?: XLSXCellBorderStyle
+	borderBottomStyle?: 'dashed' | 'dotted' | 'dobule' | 'medium' | 'thick' | 'thin'
 	borderLeftColor?: AARRGGBB
-	borderLeftStyle?: XLSXCellBorderStyle
+	borderLeftStyle?: 'dashed' | 'dotted' | 'dobule' | 'medium' | 'thick' | 'thin'
 	borderRightColor?: AARRGGBB
-	borderRightStyle?: XLSXCellBorderStyle
+	borderRightStyle?: 'dashed' | 'dotted' | 'dobule' | 'medium' | 'thick' | 'thin'
 	borderTopColor?: AARRGGBB
-	borderTopStyle?: XLSXCellBorderStyle
+	borderTopStyle?: 'dashed' | 'dotted' | 'dobule' | 'medium' | 'thick' | 'thin'
 	color?: AARRGGBB
 	fill?: AARRGGBB
 	fontSize?: number
 	format?: XLSXCellFormat | string
 	hidden?: boolean
-	horizontalAlign?: XLSXCellHorizontalAlign
+	horizontalAlign?: 'left' | 'center' | 'right' | 'fill' | 'justify' | 'centerContinuous' | 'distributed'
 	indent?: number
 	locked?: boolean
 	readingOrder?: XLSXCellReadingOrder
 	shrinkToFit?: boolean
 	textRotation?: number
-	verticalAlign?: XLSXCellVerticalAlign
+	verticalAlign?: 'bottom' | 'distributed' | 'center' | 'justify' | 'top'
 	wrapText?: boolean
 }
 
@@ -106,33 +106,6 @@ export enum XLSXPageSize {
 	size100x148 = 44, // 100x148 mm (A6 photo card size)
 	wide16x9 = 71,
 	custom = 256, // TODO: how to implement this?
-}
-
-export enum XLSXCellBorderStyle {
-	dashed = 'dashed',
-	dotted = 'dotted',
-	double = 'double',
-	medium = 'medium',
-	thick = 'thick',
-	thin = 'thin',
-}
-
-export enum XLSXCellVerticalAlign {
-	bottom = 'bottom',
-	distributed = 'distributed',
-	center = 'center',
-	justify = 'justify',
-	top = 'top',
-}
-
-export enum XLSXCellHorizontalAlign {
-	left = 'left',
-	center = 'center',
-	right = 'right',
-	fill = 'fill',
-	justify = 'justify',
-	centerContinuous = 'centerContinuous',
-	distributed = 'distributed',
 }
 
 export enum XLSXCellReadingOrder {
