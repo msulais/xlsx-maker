@@ -2,8 +2,40 @@ import { dateDiffInDays, lettersToNumber } from "./utils"
 
 let SHEET_ID_COUNTER: number = 0
 
+export type XLSXCellLocation = string
 export type AARRGGBB = number
 export type XLSXCellValue = string | number | Date
+
+export type XLSXPageSheet = {
+	printArea?: `${XLSXCellLocation}:${XLSXCellLocation}`
+	pictureUrl?: string
+	margins?: {
+		bottom?: number
+		footer?: number
+		header?: number
+		left?: number
+		right?: number
+		top?: number
+	}
+	setup?: {
+		blackAndWhite?: boolean
+		cellComments?: 'none' | 'asDisplayed' | 'atEnd'
+		copies?: number
+		draft?: boolean
+		errors?: 'displayed' | 'blank' | 'dash' | 'na'
+		firstPageNumber?: number
+		fitToHeight?: number
+		fitToWidth?: number
+		horizontalDpi?: number
+		orientation?: 'default' | 'portrait' | 'landscape'
+		pageOrder?: 'downThenOver' | 'overThenDown'
+		paperSize?: XLSXPageSize
+		scale?: number
+		useFirstPageNumber?: boolean
+		usePrinterDefaults?: boolean
+		verticalDpi?: number
+	}
+}
 
 export type XLSXOptions = {
 	app?: {
@@ -46,6 +78,34 @@ export type XLSXCellAttributes = {
 	textRotation?: number
 	verticalAlign?: XLSXCellVerticalAlign
 	wrapText?: boolean
+}
+
+export enum XLSXPageSize {
+	A4 = 9,
+	A6 = 70,
+	A5 = 11,
+	A3 = 8,
+	A2 = 66,
+	A3Plus = 67,
+	size10x15 = 45, // Photo 10x15 cm (or 4x6 in)
+	size13x18 = 46, // Photo 13x18 cm (or 5x7 in)
+	size9x13 = 47, // Photo 9x13 cm (or 3.5x5 in)
+	size5x8 = 48, // 5x8 in (Statement size is 6)
+	size20x25 = 49, // 20x25 cm (or 8x10 in)
+	letter = 1,
+	legal = 5,
+	size8x13 = 41, // Folio or German Legal Fanfold
+	indianLegal = 70, // Often mapped to A6/A4 or similar custom sizes in non-MS systems
+	envelope10 = 20, // Envelope #10 (4 1/8 x 9 1/2 in)
+	envelopeDL = 27, // Envelope DL (110 x 220 mm)
+	envelopeC6 = 31, // Envelope C6 (114 x 162 mm)
+	B4 = 12,
+	B3 = 68,
+	size8K = 65, // A common Asian paper standard
+	size16K = 64, // A common Asian paper standard
+	size100x148 = 44, // 100x148 mm (A6 photo card size)
+	wide16x9 = 71,
+	custom = 256, // TODO: how to implement this?
 }
 
 export enum XLSXCellBorderStyle {
@@ -186,11 +246,11 @@ export class XLSXCell {
 	#x: number = 1
 	#y: number = 1
 
-	constructor (
+	constructor(
 		position: string,
 		value: XLSXCellValue,
 		attributes?: XLSXCellAttributes
-	){
+	) {
 		this.position = position
 		this.value = value
 		this.#attributes = attributes ?? {}
@@ -208,10 +268,10 @@ export class XLSXCell {
 		return this.#position
 	}
 
-	set position (value: string) {
+	set position(value: string) {
 		value = value.replace(/\$/gs, '') // remove absolute position
 
-		this.#position = /[A-Z]+?[1-9]+?[0-9]*/.test(value)? value : 'A1'
+		this.#position = /[A-Z]+?[1-9]+?[0-9]*/.test(value) ? value : 'A1'
 		let [x, y] = [1, 1]
 		const X = this.#position.match(/^[A-Z]+/)
 		const Y = this.#position.match(/[0-9]+$/)
@@ -246,9 +306,9 @@ export class XLSXCell {
 		}
 
 		switch (typeof v) {
-		case "number": return this.#absValue = (v as number).toString()
-		case "string": return this.#absValue = v as string
-		default: this.#absValue = String(v)
+			case "number": return this.#absValue = (v as number).toString()
+			case "string": return this.#absValue = v as string
+			default: this.#absValue = String(v)
 		}
 	}
 
@@ -266,16 +326,22 @@ export class XLSXSheet {
 	#id: number
 	#order: number
 	#cells: Map<XLSXCell['position'], XLSXCell>
+	#page: XLSXPageSheet = {}
 
 	constructor(
 		name: string,
 		cells: XLSXCell[],
-		options?: { order?: number, id?: number }
+		options?: {
+			order?: number,
+			id?: number,
+			page?: XLSXPageSheet
+		}
 	) {
 		this.#name = name
 		this.#order = options?.order ?? 0
 		this.#id = options?.id ?? (++SHEET_ID_COUNTER)
 		this.#cells = new Map(cells.map(v => [v.position, v]))
+		this.#page = options?.page ?? {}
 	}
 
 	get id() {
@@ -311,7 +377,8 @@ export class XLSXSheet {
 	static copy(sheet: XLSXSheet) {
 		return new XLSXSheet(sheet.#name, sheet.cells.map(v => XLSXCell.copy(v)), {
 			id: sheet.#id,
-			order: sheet.#order
+			order: sheet.#order,
+			page: structuredClone(sheet.#page)
 		})
 	}
 }
@@ -325,11 +392,12 @@ export class XLSX {
 		this.#options = options
 	}
 
-	get sheets() { return this
-		.#sheets
-		.values()
-		.toArray()
-		.sort((a, b) => a.order - b.order)
+	get sheets() {
+		return this
+			.#sheets
+			.values()
+			.toArray()
+			.sort((a, b) => a.order - b.order)
 	}
 
 	get options() {
