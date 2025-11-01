@@ -8,70 +8,61 @@
 	xmlns:xr2="http://schemas.microsoft.com/office/spreadsheetml/2015/revision2"
 	xmlns:xr3="http://schemas.microsoft.com/office/spreadsheetml/2016/revision3"
 	xr:uid="{F1F58B35-EFBA-4E9A-BB22-0C1EFA438F5D}">
-	<dimension ref="A1:G3" />
+	<dimension ref="A1:G4" />
 	<sheetViews>
 		<sheetView tabSelected="1" workbookViewId="0">
-			<selection activeCell="G2" sqref="G2" />
+			<selection activeCell="F5" sqref="F5" />
 		</sheetView>
 	</sheetViews>
 	<sheetFormatPr defaultRowHeight="15" x14ac:dyDescent="0.25" />
 	<cols>
 		<col min="3" max="3" width="10.42578125" bestFit="1" customWidth="1" />
-		<col min="6" max="6" width="10.42578125" bestFit="1" customWidth="1" />
-		<col min="7" max="7" width="18.28515625" customWidth="1" />
 	</cols>
 	<sheetData>
-		<row r="1" spans="1:7" ht="15.75" thickBot="1" x14ac:dyDescent="0.3">
-			<c r="A1" s="6" t="s">
+		<row r="1" spans="1:7" x14ac:dyDescent="0.25">
+			<c r="A1" t="s">
 				<v>0</v>
 			</c>
-			<c r="B1" s="1">
-				<v>0</v>
+			<c r="C1" t="s">
+				<v>3</v>
 			</c>
-			<c r="C1" s="3">
-				<v>44977</v>
-			</c>
-			<c r="G1" s="9" t="s">
-				<v>2</v>
+			<c r="G1" t="s">
+				<v>1</v>
 			</c>
 		</row>
 		<row r="2" spans="1:7" x14ac:dyDescent="0.25">
-			<c r="A2" s="2" t="s">
-				<v>1</v>
+			<c r="B2" t="s">
+				<v>0</v>
 			</c>
-			<c r="B2" s="1">
-				<v>1</v>
+			<c r="G2" t="s">
+				<v>2</v>
 			</c>
-			<c r="C2" s="8">
-				<v>44977</v>
-			</c>
-			<c r="E2" s="2" t="str">
-				<f>A1</f>
-				<v>This is string</v>
-			</c>
-			<c r="G2" s="11" t="s">
+		</row>
+		<row r="3" spans="1:7" x14ac:dyDescent="0.25">
+			<c r="G3" t="s">
 				<v>3</v>
 			</c>
 		</row>
-		<row r="3" spans="1:7" ht="55.5" x14ac:dyDescent="0.25">
-			<c r="A3" s="7" t="s">
-				<v>1</v>
-			</c>
-			<c r="B3" s="4">
-				<v>2</v>
-			</c>
-			<c r="C3" s="5">
-				<v>44977</v>
-			</c>
-			<c r="F3" s="3" t="str">
-				<f>IF(MIN(C1:C3)&gt;0,"YES", "NO")</f>
-				<v>YES</v>
-			</c>
-			<c r="G3" s="10" t="s">
+		<row r="4" spans="1:7" x14ac:dyDescent="0.25">
+			<c r="G4" t="s">
 				<v>4</v>
 			</c>
 		</row>
 	</sheetData>
+	<dataValidations count="2">
+		<dataValidation type="decimal" allowBlank="1" showInputMessage="1" showErrorMessage="1"
+			errorTitle="error title" error="error message"
+			promptTitle="This is data_validation title" prompt="And this is the message"
+			sqref="A1 B2" xr:uid="{156E32D6-A168-414A-B2A6-43B482FC9490}">
+			<formula1>0</formula1>
+			<formula2>1000</formula2>
+		</dataValidation>
+		<dataValidation type="list" errorStyle="information" allowBlank="1" showInputMessage="1"
+			showErrorMessage="1" errorTitle="info_title" error="info_message"
+			promptTitle="animal and dracula" prompt="put anything from list please" sqref="C1"
+			xr:uid="{3B2EC71E-CE8E-49A3-A6B6-FBACAC43A563}">
+			<formula1>$G$1:$G$4</formula1>
+		</dataValidation>
+	</dataValidations>
 	<pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3" />
-	<pageSetup paperSize="9" orientation="portrait" horizontalDpi="0" verticalDpi="0" r:id="rId1" />
 </worksheet>

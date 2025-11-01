@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="7" uniqueCount="5">
+	<si>
+		<t>THIS IS DATA</t>
+	</si>
+	<si>
+		<t>Chicken</t>
+	</si>
+	<si>
+		<t>Fish</t>
+	</si>
+	<si>
+		<t>Tiger</t>
+	</si>
+	<si>
+		<t>Dracula</t>
+	</si>
+</sst>
