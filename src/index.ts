@@ -5,6 +5,25 @@ let SHEET_ID_COUNTER: number = 0
 export type AARRGGBB = number
 export type XLSXCellValue = string | number | Date
 
+export type XLSXOptions = {
+	app?: {
+		company?: string
+		docSecurity?: number
+		hyperlinksChanged?: boolean
+		linksUpToDate?: boolean
+		name?: string
+		scaleCrop?: boolean
+		sharedDoc?: boolean
+		version?: string
+	}
+	core?: {
+		creator?: string
+		dateCreated?: Date
+		dateModified?: Date
+		lastModifiedBy?: string
+	}
+}
+
 export type XLSXCellAttributes = {
 	borderBottomColor?: AARRGGBB
 	borderBottomStyle?: XLSXCellBorderStyle
@@ -291,9 +310,11 @@ export class XLSXSheet {
 
 export class XLSX {
 	#sheets = new Map<XLSXSheet['id'], XLSXSheet>()
+	#options: XLSXOptions
 
-	constructor(defaultSheet: XLSXSheet) {
+	constructor(defaultSheet: XLSXSheet, options: XLSXOptions = {}) {
 		this.#sheets.set(defaultSheet.id, defaultSheet)
+		this.#options = options
 	}
 
 	get sheets() { return this
@@ -302,6 +323,14 @@ export class XLSX {
 		.toArray()
 		.sort((a, b) => a.order - b.order)
 		.map(v => XLSXSheet.copy(v))
+	}
+
+	get options() {
+		return this.#options
+	}
+
+	set options(value: XLSXOptions) {
+		this.#options = value
 	}
 
 	addSheet(sheet: XLSXSheet) {
