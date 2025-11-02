@@ -345,9 +345,15 @@ export class XLSXSheet {
 	get password() {
 		return this.#password
 	}
-
 	set password(value: string | undefined) {
 		this.#password = value
+	}
+
+	get page() {
+		return this.#page
+	}
+	set page(value: XLSXPageSheet) {
+		this.#page = value
 	}
 
 	addCell(cell: XLSXCell) {
