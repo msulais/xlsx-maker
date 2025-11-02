@@ -138,7 +138,9 @@ export class XLSXSheet {
 			.sort((a, b) => a.coordinate[0] - b.coordinate[0])
 		)
 		for (const cell of sortedCellsByColumn) {
-			const [x, y] = cell.coordinate
+			let [x, y] = cell.coordinate
+			--x
+			--y
 			let row = rows[y]
 			if (!row) {
 				row = rows[y] = []
