@@ -4,7 +4,6 @@ let SHEET_ID_COUNTER: number = 0
 
 export type XLSXPageSheet = {
 	printArea?: `${XLSXCell['position']}:${XLSXCell['position']}`
-	pictureUrl?: string
 	margins?: {
 		bottom?: number
 		footer?: number
