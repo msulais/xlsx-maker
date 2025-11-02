@@ -131,6 +131,25 @@ export class XLSXSheet {
 		this.#cells.delete(position)
 	}
 
+	getTable() {
+		const rows: (XLSXCell | undefined)[][] = []
+		const sortedCellsByColumn = (this
+			.#cells.values().toArray()
+			.sort((a, b) => a.coordinate[0] - b.coordinate[0])
+		)
+		for (const cell of sortedCellsByColumn) {
+			const [x, y] = cell.coordinate
+			let row = rows[y]
+			if (!row) {
+				row = rows[y] = []
+			}
+
+			row[x] = cell
+ 		}
+
+		return rows
+	}
+
 	static copy(sheet: XLSXSheet) {
 		return new XLSXSheet(sheet.#name, sheet.cells.map(v => XLSXCell.copy(v)), {
 			id: sheet.#id,
