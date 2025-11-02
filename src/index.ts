@@ -17,6 +17,7 @@ export type XLSXOptions = {
 		dateModified?: Date
 		lastModifiedBy?: string
 	}
+	password?: string
 }
 
 export class XLSX {
