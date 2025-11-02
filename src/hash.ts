@@ -1,5 +1,5 @@
 interface XLSXHashData {
-	algorithmName: string
+	algorithm: string
 	hashValue: string
 	saltValue: string
 	spinCount: string
@@ -54,7 +54,7 @@ export async function generateXLSXHashProtection(password: string): Promise<XLSX
 	const saltValue = arrayBufferToBase64(saltBytes.buffer)
 
 	return {
-		algorithmName,
+		algorithm: algorithmName,
 		hashValue,
 		saltValue,
 		spinCount: spinCount.toString(),
