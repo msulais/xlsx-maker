@@ -300,6 +300,7 @@ export class XLSXSheet {
 	#order: number
 	#cells: Map<XLSXCell['position'], XLSXCell>
 	#page: XLSXPageSheet = {}
+	#password?: string
 
 	constructor(
 		name: string,
@@ -308,6 +309,7 @@ export class XLSXSheet {
 			order?: number,
 			id?: number,
 			page?: XLSXPageSheet
+			password?: string
 		}
 	) {
 		this.#name = name
@@ -315,6 +317,7 @@ export class XLSXSheet {
 		this.#id = options?.id ?? (++SHEET_ID_COUNTER)
 		this.#cells = new Map(cells.map(v => [v.position, v]))
 		this.#page = options?.page ?? {}
+		this.#password = options?.password
 	}
 
 	get id() {
@@ -339,6 +342,14 @@ export class XLSXSheet {
 		return this.#cells.values().toArray()
 	}
 
+	get password() {
+		return this.#password
+	}
+
+	set password(value: string | undefined) {
+		this.#password = value
+	}
+
 	addCell(cell: XLSXCell) {
 		this.#cells.set(cell.position, cell)
 	}
@@ -351,7 +362,8 @@ export class XLSXSheet {
 		return new XLSXSheet(sheet.#name, sheet.cells.map(v => XLSXCell.copy(v)), {
 			id: sheet.#id,
 			order: sheet.#order,
-			page: structuredClone(sheet.#page)
+			page: structuredClone(sheet.#page),
+			password: sheet.#password
 		})
 	}
 }
