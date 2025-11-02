@@ -4,6 +4,7 @@ let SHEET_ID_COUNTER: number = 0
 
 export type AARRGGBB = number
 export type XLSXCellValue = string | number | Date
+export type XLSXBorderStyle = 'dashed' | 'dotted' | 'dobule' | 'medium' | 'thick' | 'thin'
 
 export type XLSXPageSheet = {
 	printArea?: `${XLSXCell['position']}:${XLSXCell['position']}`
@@ -57,13 +58,13 @@ export type XLSXOptions = {
 
 export type XLSXCellAttributes = {
 	borderBottomColor?: AARRGGBB
-	borderBottomStyle?: 'dashed' | 'dotted' | 'dobule' | 'medium' | 'thick' | 'thin'
+	borderBottomStyle?: XLSXBorderStyle
 	borderLeftColor?: AARRGGBB
-	borderLeftStyle?: 'dashed' | 'dotted' | 'dobule' | 'medium' | 'thick' | 'thin'
+	borderLeftStyle?: XLSXBorderStyle
 	borderRightColor?: AARRGGBB
-	borderRightStyle?: 'dashed' | 'dotted' | 'dobule' | 'medium' | 'thick' | 'thin'
+	borderRightStyle?: XLSXBorderStyle
 	borderTopColor?: AARRGGBB
-	borderTopStyle?: 'dashed' | 'dotted' | 'dobule' | 'medium' | 'thick' | 'thin'
+	borderTopStyle?: XLSXBorderStyle
 	color?: AARRGGBB
 	fill?: AARRGGBB
 	fontSize?: number
