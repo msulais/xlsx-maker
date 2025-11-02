@@ -1,4 +1,4 @@
-interface XLSXHashData {
+export type XLSXProtectionHashData = {
 	algorithm: string
 	hashValue: string
 	saltValue: string
@@ -30,7 +30,7 @@ function concatArrayBuffers(arr1: ArrayBuffer, arr2: ArrayBuffer): Uint8Array {
 	return tmp
 }
 
-export async function generateXLSXHashProtection(password: string): Promise<XLSXHashData> {
+export async function generateXLSXHashProtection(password: string): Promise<XLSXProtectionHashData> {
 	const spinCount = 100000
 	const algorithm = 'SHA-512'
 	const saltBytes = window.crypto.getRandomValues(new Uint8Array(16))
