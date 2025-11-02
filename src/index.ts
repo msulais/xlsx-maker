@@ -2,12 +2,11 @@ import { dateDiffInDays, lettersToNumber } from "./utils"
 
 let SHEET_ID_COUNTER: number = 0
 
-export type XLSXCellLocation = string
 export type AARRGGBB = number
 export type XLSXCellValue = string | number | Date
 
 export type XLSXPageSheet = {
-	printArea?: `${XLSXCellLocation}:${XLSXCellLocation}`
+	printArea?: `${XLSXCell['position']}:${XLSXCell['position']}`
 	pictureUrl?: string
 	margins?: {
 		bottom?: number
