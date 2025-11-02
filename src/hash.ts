@@ -2,7 +2,7 @@ interface XLSXHashData {
 	algorithm: string
 	hashValue: string
 	saltValue: string
-	spinCount: string
+	spinCount: number
 }
 
 const subtleCrypto: SubtleCrypto = window.crypto.subtle
@@ -32,7 +32,7 @@ function concatArrayBuffers(arr1: ArrayBuffer, arr2: ArrayBuffer): Uint8Array {
 
 export async function generateXLSXHashProtection(password: string): Promise<XLSXHashData> {
 	const spinCount = 100000
-	const algorithmName = 'SHA-512'
+	const algorithm = 'SHA-512'
 	const saltBytes = window.crypto.getRandomValues(new Uint8Array(16))
 	const passwordBytes = strToUtf16le(password)
 	const initialBuffer = concatArrayBuffers(
@@ -40,23 +40,23 @@ export async function generateXLSXHashProtection(password: string): Promise<XLSX
 		passwordBytes.buffer as ArrayBuffer
 	)
 	let currentHash: ArrayBuffer = await subtleCrypto.digest(
-		algorithmName,
+		algorithm,
 		initialBuffer as Uint8Array<ArrayBuffer>
 	)
 	for (let i = 0; i < spinCount; i++) {
 		const iterBuffer = new ArrayBuffer(4)
 		new DataView(iterBuffer).setUint32(0, i, true)
 		const combinedBuffer = concatArrayBuffers(currentHash, iterBuffer)
-		currentHash = await subtleCrypto.digest(algorithmName, combinedBuffer as BufferSource)
+		currentHash = await subtleCrypto.digest(algorithm, combinedBuffer as BufferSource)
 	}
 
 	const hashValue = arrayBufferToBase64(currentHash)
 	const saltValue = arrayBufferToBase64(saltBytes.buffer)
 
 	return {
-		algorithm: algorithmName,
+		algorithm,
 		hashValue,
 		saltValue,
-		spinCount: spinCount.toString(),
+		spinCount,
 	}
 }
